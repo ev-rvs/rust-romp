@@ -149,6 +149,11 @@ impl Universe {
         self.cells.as_ptr()
     }
 
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row, column);
+        self.cells[idx].toggle();
+    }
+
     /// Set the width of the universe.
     ///
     /// Resets all cells to the dead state.
@@ -182,4 +187,13 @@ impl Universe {
         }
     }
 
+}
+
+impl Cell {
+    fn toggle(&mut self) {
+        *self = match *self {
+            Cell::Dead => Cell::Alive,
+            Cell::Alive => Cell::Dead,
+        };
+    }
 }
